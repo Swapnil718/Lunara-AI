@@ -49,4 +49,3 @@ It features secure authentication, chat history management, and a responsive UI 
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/f22a4eee-7772-4491-b184-cba01e55d39b" />
 
 
-<p align="center">✨ Built with Passion, Code, and Coffee — by Megha Patel ✨</p> 
