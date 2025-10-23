@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero glass">
+  <div class="hero-copy">
+    <h1>Illuminate your conversations with <span class="glow">Lunara AI</span></h1>
+    <p class="lead">A beautiful, embeddable AI assistant for your website — multi-tenant, secure, and blazing fast.</p>
+    <div class="cta-row">
+      <a class="btn primary lg" href="{{ url_for('chat') }}">Open the App</a>
+      
+    </div>
+    {% if not current_user.is_authenticated %}
+      <p class="subtle">No account? <a href="{{ url_for('auth.signup') }}">Create one</a> — it’s free.</p>
+    {% endif %}
+  </div>
+  <div class="hero-code">
+<pre><code>&lt;!-- Embed Lunara anywhere --&gt;
+&lt;script&gt;
+  window.STELLA_HOST = "https://your-domain";
+&lt;/script&gt;
+&lt;script src="https://your-domain/static/widget/widget.js" defer&gt;&lt;/script&gt;</code></pre>
+  </div>
+</section>
+
+<section class="features">
+  <article class="card">
+    <h3>✨ Beautiful UI</h3>
+    <p>Dark/light themes, glassmorphism, and smooth micro-interactions out of the box.</p>
+  </article>
+  <article class="card">
+    <h3>⚡️ Fast & Contextual</h3>
+    <p>OpenAI-powered responses with chat history and memory summaries (extensible).</p>
+  </article>
+  <article class="card">
+    <h3>🧩 Embeddable</h3>
+    <p>Add one snippet to your website. Your customers chat; you get insights.</p>
+  </article>
+</section>
+{% endblock %}

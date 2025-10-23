@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lunara AI — Illuminate your conversations</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='lunara.css') }}">
+</head>
+<body>
+  <!-- animated stars -->
+  <div class="stars"></div>
+  <div class="twinkle"></div>
+
+  <header class="site-header glass">
+    <div class="container nav">
+      <a class="brand" href="{{ url_for('home') }}">
+        <span class="brand-mark">🌙</span> <span>Lunara <b>AI</b></span>
+      </a>
+
+      <button id="aside-toggle" class="btn icon-btn mobile-only" aria-label="Toggle menu">☰</button>
+
+    <nav class="nav-links">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('chat') }}">App</a>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('history') }}">History</a>
+         {% endif %}
+    </nav>
+
+
+      <div class="nav-cta">
+        <button id="theme-toggle" class="btn icon-btn" title="Toggle theme">☀️</button>
+        {% if current_user.is_authenticated %}
+          <form method="get" action="{{ url_for('auth.logout') }}" class="inline">
+            <button class="btn subtle">Logout</button>
+          </form>
+        {% else %}
+          <a class="btn subtle" href="{{ url_for('auth.login') }}">Login</a>
+          <a class="btn primary" href="{{ url_for('auth.signup') }}">Sign up</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main class="container page">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-wrap">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2025 Lunara AI</span>
+      <span class="dot">•</span>
+      <span>Made with Flask & OpenAI</span>
+    </div>
+  </footer>
+
+  <script>
+    // theme toggle (persisted)
+    (function () {
+      const key='lnr-theme';
+      const root=document.documentElement;
+      const btn=document.getElementById('theme-toggle');
+      const set=(t)=>{ root.setAttribute('data-theme', t); btn.textContent = (t==='dark'?'☀️':'🌙'); };
+      set(localStorage.getItem(key)||'dark');
+      btn.onclick=()=>{ const t=(root.getAttribute('data-theme')==='dark'?'light':'dark'); localStorage.setItem(key,t); set(t); };
+    })();
+
+    // mobile chat sidebar toggle
+    (function () {
+        const btn = document.getElementById('aside-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+        document.body.classList.toggle('aside-open');
+        });
+    })();
+
+    (function () {
+    const btn = document.getElementById('aside-toggle');
+    if (!btn) return;
+    const toggle = () => document.body.classList.toggle('aside-open');
+    btn.addEventListener('click', toggle);
+
+    // close when tapping the overlay or a sidebar link
+    document.addEventListener('click', (e) => {
+      if (!document.body.classList.contains('aside-open')) return;
+      const aside = document.querySelector('.chat-aside');
+      const clickedInside = aside && aside.contains(e.target);
+      const clickedButton = e.target === btn;
+      if (!clickedInside && !clickedButton) {
+        document.body.classList.remove('aside-open');
+      }
+    }, true);
+  })();
+  </script>
+</body>
+</html>

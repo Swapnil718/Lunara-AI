@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="chat-layout">
+  <aside class="chat-aside glass">
+    <div class="aside-header">
+      <div class="bot-chip">🌙 Lunara</div>
+      <small class="muted">Calm, clear & helpful</small>
+    </div>
+
+    <!-- Actions -->
+    <div class="aside-actions">
+      <!-- New Chat just reloads the chat page (fresh view) -->
+      <a class="btn ghost" href="{{ url_for('chat') }}">New Chat</a>
+      <a class="btn subtle" href="{{ url_for('history') }}">View History</a>
+    </div>
+
+    <div class="aside-tips">
+      <p class="muted">Tips</p>
+      <ul>
+        <li>Press <kbd>Enter</kbd> to send</li>
+        <li><kbd>Shift</kbd> + <kbd>Enter</kbd> for newline</li>
+        <li>Use the 🎤 mic for voice</li>
+      </ul>
+    </div>
+  </aside>
+
+  <div class="chat-panel glass">
+    <div id="chat-log" class="chat-log">
+      {% if messages %}
+        {% for m in messages %}
+          <div class="msg {{ 'user' if m.role=='user' else 'bot' }}">
+            <div class="avatar">{{ 'U' if m.role=='user' else 'L' }}</div>
+            <div class="bubble">
+              <div class="meta">
+                <span class="name">{{ 'You' if m.role=='user' else 'Lunara' }}</span>
+                <span class="dot">•</span>
+                <span class="time">{{ m.created_at.strftime('%H:%M') }}</span>
+              </div>
+              <div class="content">{{ m.content }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="empty">Start the conversation below ✨</div>
+      {% endif %}
+      <div id="typing" class="typing hidden">
+        <div class="avatar">L</div>
+        <div class="bubble"><span class="dots"><i></i><i></i><i></i></span></div>
+      </div>
+    </div>
+
+    <!-- POST to /chat -->
+    <form id="chat-form" class="chat-input-row" method="post" action="{{ url_for('chat') }}">
+      <button type="button" id="mic" class="icon-btn" title="Voice input">🎤</button>
+      <textarea id="prompt" name="message" rows="1" placeholder="Ask anything…"></textarea>
+      <button class="btn primary" id="send">Send ➜</button>
+    </form>
+  </div>
+</section>
+
+<script>
+  // Autogrow textarea + keyboard UX
+  const ta = document.getElementById('prompt');
+  const form = document.getElementById('chat-form');
+  const typing = document.getElementById('typing');
+  const log = document.getElementById('chat-log');
+
+  function autogrow(el){ el.style.height='auto'; el.style.height=(el.scrollHeight)+'px'; }
+  ta.addEventListener('input', ()=>autogrow(ta));
+  autogrow(ta);
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const text = ta.value.trim();
+    if(!text) return;
+    appendUser(text);
+    ta.value=''; autogrow(ta);
+    showTyping(true);
+
+    // POST to /chat -> expects JSON: { reply: "..." }
+    const res = await fetch('{{ url_for("chat") }}', {
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body: 'message=' + encodeURIComponent(text)
+    });
+
+    try {
+      const data = await res.json();
+      appendBot(data.reply || 'Sorry, I had trouble responding.');
+    } catch (err) {
+      appendBot('⚠️ Network/JSON error.');
+    } finally {
+      showTyping(false);
+    }
+  });
+
+  function appendUser(text){
+    const wrap = document.createElement('div');
+    wrap.className='msg user';
+    wrap.innerHTML = `
+      <div class="avatar">U</div>
+      <div class="bubble">
+        <div class="meta"><span class="name">You</span><span class="dot">•</span>
+          <span class="time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
+        </div>
+        <div class="content"></div>
+      </div>`;
+    wrap.querySelector('.content').textContent = text;
+    log.appendChild(wrap);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function appendBot(text){
+    const wrap = document.createElement('div');
+    wrap.className='msg bot';
+    wrap.innerHTML = `
+      <div class="avatar">L</div>
+      <div class="bubble">
+        <div class="meta"><span class="name">Lunara</span><span class="dot">•</span>
+          <span class="time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
+        </div>
+        <div class="content"></div>
+      </div>`;
+    wrap.querySelector('.content').textContent = text;
+    log.appendChild(wrap);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function showTyping(on){
+    typing.classList.toggle('hidden', !on);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  // Voice input (Web Speech API)
+  (function(){
+    const mic = document.getElementById('mic');
+    const S = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!S){ mic.title = 'Speech not supported in this browser'; mic.style.opacity=.4; return; }
+    const rec = new S(); rec.lang='en-US'; rec.interimResults=false;
+    mic.onclick = () => { rec.start(); mic.classList.add('listening'); };
+    rec.onresult = e => { ta.value = e.results[0][0].transcript; autogrow(ta); ta.focus(); };
+    rec.onend = () => mic.classList.remove('listening');
+  })();
+</script>
+{% endblock %}

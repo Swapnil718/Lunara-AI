@@ -1,0 +1,244 @@
+/* Lunara AI — Glow UI */
+:root{
+  --bg:#0f1225;
+  --bg-2:#0b0e1d;
+  --text:#e6e9f5;
+  --muted:#a6b0cf;
+  --primary:#6a6efc;        /* violet-blue */
+  --primary-2:#a78bfa;       /* lavender glow */
+  --accent:#22c55e;
+  --glass: rgba(255,255,255,.06);
+  --glass-2: rgba(255,255,255,.12);
+  --card:#151935;
+  --shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+
+html,body{height:100%}
+*{box-sizing:border-box}
+body{
+  margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color:var(--text); background: radial-gradient(1200px 800px at 80% -10%, rgba(167,139,250,.25), transparent 60%), linear-gradient(180deg, var(--bg), var(--bg-2));
+  overflow-x:hidden;
+}
+
+/* Starfield */
+.stars, .twinkle {
+  position:fixed; inset:0; pointer-events:none; z-index:-1;
+  background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"/>' ) repeat;
+}
+.twinkle { animation: twinkle 6s infinite alternate; opacity:.3 }
+@keyframes twinkle {0%{filter:brightness(1)} 100%{filter:brightness(1.5)}}
+
+/* Utilities */
+.container{max-width:1100px; margin:0 auto; padding:0 20px}
+.glass{ background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); backdrop-filter: blur(10px); border:1px solid var(--glass); border-radius:16px; box-shadow: var(--shadow); }
+.muted{ color:var(--muted) }
+.dot{ opacity:.6; margin:0 .4rem }
+.inline{ display:inline }
+kbd{ background:#0b1220; border:1px solid #2a345a; color:#cfd7ff; padding:2px 6px; border-radius:6px; font-size:.85rem }
+
+/* Header */
+.site-header{ position:sticky; top:12px; margin:12px 0; }
+.nav{ display:flex; align-items:center; justify-content:space-between; padding:10px 14px; }
+.brand{ display:flex; align-items:center; gap:10px; color:var(--text); text-decoration:none; font-weight:800; letter-spacing:.3px }
+.brand-mark{ filter:drop-shadow(0 6px 16px rgba(167,139,250,.55)); }
+.nav-links a{ color:var(--text); opacity:.85; text-decoration:none; margin:0 10px }
+.nav-links a:hover{ opacity:1; text-decoration:underline }
+.nav-cta{ display:flex; align-items:center; gap:10px }
+
+/* Buttons */
+.btn{ border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer; border:1px solid var(--glass); background:rgba(255,255,255,.03); color:var(--text); }
+.btn:hover{ filter:brightness(1.07) }
+.btn.primary{ background: linear-gradient(135deg, var(--primary), var(--primary-2)); border:none; color:white }
+.btn.ghost{ background:transparent; border:1px solid var(--glass-2) }
+.btn.subtle{ background: rgba(255,255,255,.05) }
+.btn.lg{ padding:12px 16px; font-size:1.05rem }
+.icon-btn{ border-radius:50%; width:42px; height:42px; display:grid; place-items:center; background: rgba(255,255,255,.06); border:1px solid var(--glass); }
+.icon-btn.listening{ outline:2px solid var(--accent) }
+
+/* Page */
+.page{ padding:18px 0 60px }
+
+/* Flash */
+.flash-wrap{ margin:10px 0 }
+.flash{ padding:10px 12px; border-radius:12px; border:1px solid var(--glass); }
+.flash.success{ background:rgba(34,197,94,.15) }
+.flash.info{ background:rgba(59,130,246,.15) }
+.flash.danger{ background:rgba(239,68,68,.15) }
+
+/* Hero */
+.hero{ display:grid; grid-template-columns: 1.1fr .9fr; gap:22px; padding:26px; align-items:center }
+.hero-copy h1{ font-size: clamp(28px, 3.5vw, 48px); margin:.2rem 0 1rem }
+.hero .lead{ color:var(--muted) }
+.cta-row{ display:flex; gap:12px; margin:18px 0 }
+.subtle{ color:var(--muted) }
+.glow{ text-shadow: 0 0 30px rgba(167,139,250,.6) }
+.hero-code pre{ margin:0; background:#0b1220; border:1px solid #2a345a; border-radius:12px; padding:14px; color:#cfd7ff; overflow:auto }
+
+/* Features */
+.features{ display:grid; grid-template-columns: repeat(3,1fr); gap:16px; margin-top:24px }
+.card{ padding:18px; border:1px solid var(--glass); border-radius:14px; background:rgba(255,255,255,.03); }
+
+/* Chat layout */
+.chat-layout{ display:grid; grid-template-columns: 280px 1fr; gap:16px }
+.chat-aside{ padding:16px }
+.aside-header{ display:flex; flex-direction:column; gap:6px; margin-bottom:10px }
+.bot-chip{ display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; background:rgba(167,139,250,.15); border:1px solid rgba(167,139,250,.35) }
+.aside-actions{ display:flex; gap:10px; margin:12px 0 18px }
+.aside-tips ul{ margin:8px 0 0 18px; padding:0 }
+.aside-tips li{ margin:6px 0; color:var(--muted) }
+
+.chat-panel{ padding:0 }
+.chat-log{ padding:16px; height:60vh; overflow:auto }
+.empty{ color:var(--muted); padding:14px 8px }
+.msg{ display:flex; gap:10px; margin:10px 0 }
+.avatar{ width:36px; height:36px; border-radius:50%; display:grid; place-items:center; font-weight:800; background:#0b1220; border:1px solid #2a345a; color:#cfd7ff }
+.msg.user .avatar{ background:#1e293b; border-color:#334155 }
+.msg.bot  .avatar{ background:#0b1220; border-color:#2a345a }
+.bubble{ background:rgba(255,255,255,.04); border:1px solid var(--glass); padding:10px 12px; border-radius:12px; max-width:780px; }
+.msg.user .bubble{ background:rgba(91,95,242,.12) }
+.meta{ font-size:.85rem; color:var(--muted); margin-bottom:4px; display:flex; align-items:center }
+.content{ white-space:pre-wrap; line-height:1.5 }
+
+.typing .dots{ display:inline-flex; gap:6px }
+.typing i{ width:6px; height:6px; display:inline-block; background:#cfd2ff; border-radius:50%; opacity:.7; animation: blink 1s infinite }
+.typing i:nth-child(2){ animation-delay:.15s } .typing i:nth-child(3){ animation-delay:.3s }
+@keyframes blink { 0%,80%,100%{transform:translateY(0)} 40%{transform:translateY(-3px)} }
+.hidden{ display:none }
+
+.chat-input-row{ display:flex; gap:10px; padding:12px; border-top:1px solid var(--glass); background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); backdrop-filter: blur(8px); position:sticky; bottom:0 }
+.chat-input-row textarea{
+  flex:1; resize:none; max-height:160px; min-height:42px; border-radius:12px; padding:10px 12px;
+  border:1px solid #2a345a; background:#0b1220; color:#e6e9f5; outline:none;
+}
+
+/* Footer */
+.site-footer{ color:var(--muted); padding:22px 0; border-top:1px solid var(--glass); margin-top:28px }
+
+/* Light theme overrides */
+html[data-theme="light"]{
+  --bg:#f6f7ff; --bg-2:#eef0ff; --text:#0f1225; --muted:#4c5270; --glass: rgba(0,0,0,.06); --glass-2: rgba(0,0,0,.12); --card:#ffffff;
+}
+html[data-theme="light"] body{ background: radial-gradient(1200px 800px at 80% -10%, rgba(106,110,252,.15), transparent 60%), linear-gradient(180deg, var(--bg), var(--bg-2)); }
+html[data-theme="light"] .glass{ background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.6)); backdrop-filter: blur(12px); }
+html[data-theme="light"] .avatar{ background:#eef1ff; border-color:#d3d8ff; color:#3a3f77; }
+html[data-theme="light"] .chat-input-row textarea{ background:#fff; border-color:#d3d8ff; color:#0f1225; }
+
+/* -------------------------
+   Mobile-first improvements
+   ------------------------- */
+
+/* Respect mobile browser chrome (keyboard, URL bar) */
+:root {
+  --vh: 1dvh; /* dynamic viewport unit for modern mobile */
+}
+
+/* Hide mobile-only controls on larger screens */
+.mobile-only { display: none; }
+
+/* Chat layout defaults (desktop already ok) */
+.chat-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 16px;
+  min-height: calc(100dvh - 120px); /* header+footer space */
+}
+
+/* Make input row “sticky” at bottom */
+.chat-input-row {
+  position: sticky;
+  bottom: 0;
+  background: var(--panel, rgba(255,255,255,.04));
+  backdrop-filter: blur(10px);
+  padding: 10px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+/* Make the chat scroll well */
+.chat-log {
+  overflow: auto;
+  max-height: calc(100dvh - 280px); /* room for header + tips + input */
+}
+
+/* -------------------------
+   Breakpoint: tablets/phones
+   ------------------------- */
+@media (max-width: 768px) {
+  /* show the hamburger button */
+  .mobile-only { display: inline-flex; }
+
+  /* Stack the layout: panel first, sidebar becomes a drawer */
+  .chat-layout {
+    display: block;
+    min-height: calc(100dvh - 96px);
+  }
+
+  /* Drawer-style sidebar (off-canvas) */
+  .chat-aside {
+    position: fixed;
+    top: 56px;                /* below header */
+    left: -290px;             /* hidden by default */
+    width: 260px;
+    height: calc(100dvh - 56px);
+    background: var(--panel, rgba(0,0,0,.35));
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255,255,255,.08);
+    padding: 14px 16px;
+    z-index: 40;
+    transition: left .25s ease;
+  }
+  body.aside-open .chat-aside { left: 0; }
+
+  /* Optional: simple overlay when drawer open */
+  body.aside-open::after {
+    content: "";
+    position: fixed;
+    inset: 56px 0 0 0;
+    background: rgba(0,0,0,.35);
+    z-index: 30;
+  }
+
+  /* Chat panel fills the screen */
+  .chat-panel {
+    margin: 0;
+    padding: 12px;
+    min-height: calc(100dvh - 96px);
+  }
+
+  /* Better scroll area for messages */
+  .chat-log {
+    max-height: unset;
+    height: calc(100dvh - 56px - 56px - 72px); /* header - footer - input */
+  }
+
+  /* Bigger tap targets & fonts */
+  .btn { padding: 10px 14px; font-size: 15px; }
+  .icon-btn { width: 40px; height: 40px; }
+  textarea#prompt { font-size: 16px; line-height: 1.35; }
+
+  /* Landing page hero stacks nicely */
+  .hero {
+    display: block;
+    padding: 18px;
+    text-align: left;
+  }
+  .hero .hero-copy h1 { font-size: clamp(22px, 6vw, 30px); }
+  .hero .lead { font-size: 15px; }
+  .hero .cta-row .btn { display: block; width: 100%; margin: 8px 0; }
+}
+
+/* Tiny phones */
+@media (max-width: 380px) {
+  .chat-aside { width: 236px; left: -266px; }
+  body.aside-open .chat-aside { left: 0; }
+  .name, .time { font-size: 12px; }
+  .bubble { font-size: 14px; }
+}
+
+/* Improve iOS keyboard behavior (prevents jumpy scroll) */
+@supports (-webkit-touch-callout: none) {
+  .chat-log { overscroll-behavior: contain; }
+}
+
+/* Ensure text contrast in light mode */
+html[data-theme="light"] .chat-input-row { background: rgba(255,255,255,.9); }
