@@ -37,7 +37,7 @@ It features secure authentication, chat history management, and a responsive UI 
 ## Screenshots
 
 ## Home page
-<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/55beccac-7bb0-43a7-97b0-6a5f06aa5a66" />
+<img width="1920" height="1200" alt="image" src="<img width="1500" height="815" alt="image" src="https://github.com/user-attachments/assets/2e7d5ab5-25ae-495c-9477-d03547937d7e" />
 
 ## Chatbot
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/6a08c865-3b9a-4999-b137-294ea7817b54" />
