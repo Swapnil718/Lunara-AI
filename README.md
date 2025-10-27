@@ -37,15 +37,15 @@ It features secure authentication, chat history management, and a responsive UI 
 ## Screenshots
 
 ## Home page
-<img width="1920" height="1200" alt="image" src="<img width="1500" height="815" alt="image" src="https://github.com/user-attachments/assets/2e7d5ab5-25ae-495c-9477-d03547937d7e" />
+<img width="1500" height="815" alt="image" src="https://github.com/user-attachments/assets/2e7d5ab5-25ae-495c-9477-d03547937d7e" />
 
 ## Chatbot
-<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/6a08c865-3b9a-4999-b137-294ea7817b54" />
+<img width="1505" height="821" alt="image" src="https://github.com/user-attachments/assets/e99d7267-d064-4f34-98ad-a6c6bef8b819" />
 
 ## LightMode
-<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/0f368791-8d33-4a0d-af20-8bd5a2816d5d" />
+<img width="822" height="459" alt="image" src="https://github.com/user-attachments/assets/1025f3be-9c2f-4e3d-bdec-3544f42d9bbb" />
 
 ## History
-<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/f22a4eee-7772-4491-b184-cba01e55d39b" />
+<img width="1499" height="827" alt="image" src="https://github.com/user-attachments/assets/79762a8a-019a-4a80-aff8-4bca842dd673" />
 
 
